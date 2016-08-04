@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -17,50 +18,33 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivityTAG_";
+    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+ /*       StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);*/
+
+        mTextView = (TextView) findViewById(R.id.txt1);
     }
 
     public void doMagic(View view) {
 
-        String url = "http://www.mocky.io/v2/57a01bec0f0000c10d0f650f";
+        //            Log.d(TAG, "doMagic: " + stringBuilder);
 
-        HttpURLConnection httpURLConnection = null;
+//        new NamesTask(mTextView).execute();
+            new NamesTask(this).execute();
 
-        try {
-            URL urlFormatted = new URL(url);
 
-            httpURLConnection
-                    = (HttpURLConnection) urlFormatted.openConnection();
+//        mTextView.setText(stringBuilder);
+    }
 
-            InputStream inputStream 
-                    = new BufferedInputStream (httpURLConnection.getInputStream());
+    public void loadData(String s) {
 
-            Scanner scanner = new Scanner(inputStream);
-
-            StringBuilder stringBuilder = new StringBuilder();
-            
-            while (scanner.hasNext()){
-                stringBuilder.append(scanner.next());
-            }
-            Log.d(TAG, "doMagic: " + stringBuilder);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            if(httpURLConnection != null)
-                httpURLConnection.disconnect();
-        }
-
+        mTextView.setText(s);
 
     }
 }
